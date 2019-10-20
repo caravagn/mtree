@@ -18,7 +18,7 @@
 #'
 #' @return A \code{ggplot} plot of the tree.
 #'
-#' @export plot.ctree
+#' @export plot.mtree
 #'
 #' @import crayon
 #' @import igraph
@@ -41,7 +41,7 @@
 #'    )
 #'    
 #' plot(x[[1]])
-plot.ctree = function(x,
+plot.mtree = function(x,
                       node_palette = colorRampPalette(RColorBrewer::brewer.pal(n = 9, "Set1")),
                       tree_layout = 'tree',
                       ...)

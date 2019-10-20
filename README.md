@@ -1,22 +1,21 @@
 
-# ctree <img src='man/figures/logo.png' align="right" height="139" />
+# mtree <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/caravagn/ctree.svg?branch=master)](https://travis-ci.org/caravagn/ctree)
-[![Codecov test
-coverage](https://codecov.io/gh/caravagn/ctree/branch/master/graph/badge.svg)](https://codecov.io/gh/caravagn/ctree?branch=master)
+status](https://travis-ci.org/caravagn/mtree.svg?branch=master)](https://travis-ci.org/caravagn/mtree)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
-Thee `ctree` package provides a simple implementation of clone trees
-that can be build of Cancer Cell Franctions (CCFs) clusters computed by
-tumour subclonal deconvolution. This type of models can be used to study
-the evolutionary trajectories of a tumour from bulk sequencing data.
+Thee `mtree` package provides a simple implementation of mutation trees
+that can be build of binary data reporting the presence or absence of
+specific mutations in multiple tumour regions. This type of models can
+be used to study the evolutionary trajectories of a tumour from bulk
+sequencing data generated via targeted sequencing.
 
-`ctree` is part of the `evoverse`, a package that gathers multiple R
+`mtree` is part of the `evoverse`, a package that gathers multiple R
 packages to implement Cancer Evolution analyses; see more [about
 evoverse](https://caravagn.github.io/evoverse).
 
@@ -28,19 +27,19 @@ trees.
 
 #### Help and support
 
-`ctree` has its own webpage at [GitHub
-pages](https://caravagn.github.io/ctree/).
+`mtree` has its own webpage at [GitHub
+pages](https://caravagn.github.io/mtree/).
 
 -----
 
 ### Installation
 
-You can install the released version of `ctree` from
+You can install the released version of `mtree` from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("caravagn/ctree")
+devtools::install_github("caravagn/mtree")
 ```
 
 -----

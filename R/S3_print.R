@@ -28,9 +28,9 @@
 #' )
 #' 
 #' print(x[[1]])
-print.ctree <- function(x, ...)
+print.mtree <- function(x, ...)
 {
-  stopifnot(inherits(x, "ctree"))
+  stopifnot(inherits(x, "mtree"))
   
   M = x$adj_mat
   tb = x$tb_adj_mat
@@ -72,7 +72,7 @@ print.ctree <- function(x, ...)
       printPretty(c, indent, c == cl[length(cl)])
   }
   
-  pio::pioHdr(paste0('ctree - ', x$annotation))
+  pio::pioHdr(paste0('mtree - ', x$annotation))
   
   cat('\n')
   print(x$CCF)

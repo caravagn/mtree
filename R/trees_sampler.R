@@ -32,50 +32,46 @@ trees_sampler = function(binary_clusters,
   }
   else
   {
-    # ################## Generate all trees that are compatible with the observed CCFs, we do this
-    # ################## by analyzing one sample at a time.
-    alternative = NULL
-    alternative$models = ClonEvol_surrogate(clusters, samples, clonal.cluster, min.CCF = 0.01)
-    clonevol.obj = alternative
     
-    # remove the trees which have no edges (returned for samples with only 1 cluster for instance)
-    numSol = sapply(clonevol.obj$models, function(w) {
-      sum(sapply(w, nrow) > 0)
+    # ################## Generate Suppes poset
+    SUPPES = Suppes_poset(binary_clusters, samples)
+    
+    CONSENSUS.TREE = SUPPES$Suppes %>% 
+      filter(Suppes) %>%
+      select(from, to)
+    
+    WEIGHTS.CONSENSUS.TREE = CONSENSUS.TREE %>% group_split(to)
+    names(WEIGHTS.CONSENSUS.TREE) = sapply(WEIGHTS.CONSENSUS.TREE, function(x) x$to[1]) %>% paste
+    
+    WEIGHTS.CONSENSUS.TREE = lapply(WEIGHTS.CONSENSUS.TREE, function(w)
+    {
+      # 1/K uniform
+      pio:::nmfy(
+        w$from, 
+        rep(
+          1/length(w$from), length(w$from)
+        )
+      )
     })
     
-    pio::pioStr(
-      " Trees per region", 
-      paste(numSol, collapse = ', '),
-      prefix = crayon::green(clisymbols::symbol$tick),
-      suffix = '\n')
-    
-    ################## Build all possible clonal trees
-    # 1) hash them
-    # 2) create a consensus as the union of all trees
-    # 3) generate or sample a large number of possible trees, where a parent x --> y is assigned
-    #    with probability proportional to how often the edge is detected
-    
-    CLONAL.TREES = hashTrees(clonevol.obj, samples)
-    
-    CONSENSUS = consensusModel(clonevol.obj, samples)
-    CONSENSUS.TREE = CONSENSUS$S
-    WEIGHTS.CONSENSUS.TREE = CONSENSUS$weights
+    ################## Build all possible mutation trees
+
+    # print(data.frame(CONSENSUS.TREE, stringsAsFactors = FALSE))
+    # print(WEIGHTS.CONSENSUS.TREE)
     
     # # Sampling is carried out if there are more than 'sspace.cutoff' trees, in that case we
     # # sample 'n.sampling' possible trees. Otherwise all possible trees are generated.
     TREES = all.possible.trees(
-      CONSENSUS.TREE,
-      WEIGHTS.CONSENSUS.TREE,
+      G = data.frame(CONSENSUS.TREE, stringsAsFactors = FALSE),
+      W = WEIGHTS.CONSENSUS.TREE,
       sspace.cutoff,
       n.sampling
     )
     
+    # print(TREES)
+  
     # ################## Ranking trees. A tree is good according to the following factors:
-    # # 1) the MI among the variables x and y, if they are connected by an edge x --> y [TODO: consider if we really need MI]
-    # # 2) the Multinomial probability of edge x --> y in the trees determined by the CCF
-    # # 3) for every edge  x --> y, the number of times that the CCF of x is greater than the CCF of y
-    # # 3) for every node  x --> y1 ... yK, the number of times that the CCF of x is greater than the sum of the CCFs of y1 ... yK
-    # binary.data = revolver:::binarize(x$dataset, samples)
+    # # 1) the MI among the variables x and y, if they are connected by an edge x --> y 
     
     # 1) MI from binarized data -- different options, with a control sample which avoids 0log(0)
     # • a=0:maximum likelihood estimator (see entropy.empirical)
@@ -83,40 +79,16 @@ trees_sampler = function(binary_clusters,
     # • a=1:Laplace’s prior
     # • a=1/length(y):Schurmann-Grassberger (1996) entropy estimator
     # • a=sqrt(sum(y))/length(y):minimax prior
-    binary.data = t(df_clusters)
-    binary.data[binary.data > 0] = 1
+    binary.data = binary_clusters %>% select(samples) %>% data.frame
     
-    MI.table = computeMI.table(binary.data,
+    # print(binary.data)
+    rownames(binary.data) = binary_clusters$cluster
+    
+    MI.table = computeMI.table(binary.data %>% t,
                                MI.Bayesian.prior = 0,
                                add.control = TRUE)
-    # Old parameter now fixed to FALSE
-    use.MI = FALSE
-    if (!use.MI)
-      MI.table[TRUE] = 1
-    
-    
-    # Steps 1 and 2 are collapsed, multiply MI by the Multinomial probability
-    MI.table = weightMI.byMultinomial(MI.table, WEIGHTS.CONSENSUS.TREE)
-    
-    # 3) Get penalty for direction given CCFs -- this is done for all possible edges in the data
-    # CCF = clusters[, samples, drop = FALSE]
-    # penalty.CCF.direction = edge.penalty.for.direction(TREES, CCF)
-    penalty.CCF.direction = 1
-    
-    # 4) Compute the branching penalty  --  this is done for each tree that we are considering
-    pio::pioStr(
-      " Pigeonhole Principle",
-      prefix = crayon::green(clisymbols::symbol$tick),
-      suffix = '\n')
-    
-    penalty.CCF.branching = node.penalty.for.branching(TREES, df_clusters)
-    
-    pio::pioStr(
-      " Ranking trees",
-      prefix = crayon::green(clisymbols::symbol$tick),
-      suffix = '\n')
-    
-    RANKED = rankTrees(TREES, MI.table, penalty.CCF.branching)
+
+    RANKED = rankTrees(TREES, MI.table, structural.score = NULL)
     TREES = RANKED$TREES
     SCORES = RANKED$SCORES
     
@@ -128,3 +100,35 @@ trees_sampler = function(binary_clusters,
   
   return(list(adj_mat = TREES, scores = SCORES))
 }
+
+computeMI.table = function(binary.data, MI.Bayesian.prior = 0, add.control = FALSE)
+{
+  if(add.control) binary.data = rbind(binary.data, wt = 0)
+  
+  # • a=0:maximum likelihood estimator (see entropy.empirical)
+  # • a=1/2:Jeffreys’ prior; Krichevsky-Trovimov (1991) entropy estimator
+  # • a=1:Laplace’s prior
+  # • a=1/length(y):Schurmann-Grassberger (1996) entropy estimator
+  # • a=sqrt(sum(y))/length(y):minimax prior
+  
+  MI.table = matrix(
+    apply(
+      expand.grid(colnames(binary.data), colnames(binary.data)),
+      1,
+      function(x) {
+        # Counting process.. with a Bayesian prior
+        i = x[1]
+        j = x[2]
+        jo11 = (binary.data[, i] %*% binary.data[, j])/nrow(binary.data)
+        jo10 = (binary.data[, i] %*% (1-binary.data[, j]))/nrow(binary.data)
+        jo01 = ((1-binary.data[, i]) %*% binary.data[, j])/nrow(binary.data)
+        jo00 = 1 - (jo10 + jo01 + jo11)
+        entropy::mi.Dirichlet(matrix(c(jo11, jo10, jo01, jo00), nrow = 2), a = MI.Bayesian.prior)
+      }),
+    byrow = TRUE, ncol = ncol(binary.data))
+  colnames(MI.table) = rownames(MI.table) = colnames(binary.data)
+  
+  return(MI.table)
+}
+
+

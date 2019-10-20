@@ -66,7 +66,7 @@
 #'    
 #' print(x[[1]])
 #' plot(x[[1]])
-ctrees = function(binary_clusters,
+mtrees = function(binary_clusters,
                               drivers,
                               samples,
                               patient,
@@ -77,7 +77,7 @@ ctrees = function(binary_clusters,
   
   # TODO - check input formats
   
-  pio::pioHdr(paste("ctree ~ generate clone trees for", patient))
+  pio::pioHdr(paste("mtree ~ generate mutation trees for", patient))
   
   pioStr('Sampler : ', 
          sspace.cutoff, '(cutoff), ', 
@@ -126,6 +126,9 @@ ctrees = function(binary_clusters,
   
   TREES = TREES[permuted.indexes]
   SCORES = SCORES[permuted.indexes]
+  
+  # print(TREES)
+  # print(SCORES)
   
   #####################################################################
   

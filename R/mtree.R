@@ -74,7 +74,7 @@
 #' # The same
 #' print(x)
 #' print(y)
-ctree = 
+mtree = 
   function(
     binary_clusters,
     drivers,
@@ -101,14 +101,15 @@ ctree =
           drivers = NA,
           # Driver mapping to clusters
           CCF = NA,
-          # CCF (aggregated per cluster)
+          binary = NA,
+          # CCF (aggregated per cluster) + binary (same)
           transfer = NA,
           # Information Transfer
           annotation = NA,
           # Some custom annotation
-          tree_type = "Clone tree"  # Clone tree 
+          tree_type = "Mutation tree"  # Clone tree 
         ),
-        class = "ctree",
+        class = "mtree",
         call = match.call()
       )
     
@@ -118,7 +119,8 @@ ctree =
     # =-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-
     # For historical reasons and consistency with other packages (e.g., ctree from evoverse)
     # the binary_clusters are stored inside a CCF field.
-    obj$CCF = binary_clusters
+    obj$CCF = obj$binary_data = binary_clusters %>% mutate(cluster = paste(cluster))
+
     obj$samples = samples
     obj$drivers = drivers
     
@@ -212,7 +214,7 @@ ctree =
     
     obj$annotation = annotation
     
-    obj$tree_type = "Clone tree from CCF data."
+    obj$tree_type = "Mutation tree from binary data."
     
     return(obj)
   }

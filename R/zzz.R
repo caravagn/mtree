@@ -30,17 +30,17 @@
   # Header
   # =-=-=-=-=-=-
   
-  ctree_welcome_message =  getOption('ctree_welcome_message', default = TRUE)
+  mtree_welcome_message =  getOption('mtree_welcome_message', default = TRUE)
   
-  if (ctree_welcome_message)
+  if (mtree_welcome_message)
   {
-    pio::pioHdr('ctree - Clone Trees in cancer')
+    pio::pioHdr('Mtree - Mutation Trees in cancer')
     pio::pioStr("Author : ",
                 "Giulio Caravagna <gcaravagn@gmail.com>",
                 suffix = '\n')
-    pio::pioStr("GitHub : ", "caravagn/ctree", suffix = '\n')
+    pio::pioStr("GitHub : ", "caravagn/mtree", suffix = '\n')
     
-    options(ctree_welcome_message = FALSE)
+    options(mtree_welcome_message = FALSE)
   }
   
   invisible()

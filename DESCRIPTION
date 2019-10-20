@@ -1,17 +1,17 @@
-Package: ctree
+Package: mtree
 Version: 0.01.1
 Date: 2019-9-28
-Title: ctree - Clone Tree
+Title: mtree - Mutation Tree
 Type: Package
 Author: Giulio Caravagna
 Maintainer: Giulio Caravagna <gcaravagn@gmail.com>
-Description: This package provides an implementation for clone trees
-  that can be build of Cancer Cell Franctions (CCFs) clusters computed by
-  tumour subclonal deconvolution. This type of models can be used to study
+Description: This package provides an implementation for mutation trees
+  that can be build of multi-region binary somatic data (mutations, CNAs, ...). 
+  This type of models can be used to study
   the evolutionary trajectories of a tumour from bulk sequencing data.
-  This package provides several functions to generate clone trees from 
-  the results of subclonal deconvolution analyses, to plot and summarise
-  trees, and is part of the `evoverse`, a package that gathers multiple R
+  This package provides several functions to generate mutation trees from 
+  binary datas, to plot and summarise trees, and is part of the `evoverse`, 
+  a package that gathers multiple R
   packages to implement Cancer Evolution analyses.
 License: GPL-3
 Encoding: UTF-8
