@@ -4,8 +4,7 @@ language: r
 
 cache: packages
 
-r_github_packages:  
-  caravagn/pio
-  caravagn/easypar
+r_github_packages:  caravagn/pio
+
 
 warnings_are_errors: false

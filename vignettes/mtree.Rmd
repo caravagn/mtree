@@ -75,6 +75,9 @@ x = mtrees(
 
 The sampler creates a number of mutation trees that can fit the data according to a model that integrates [Chow-Liu trees](https://en.wikipedia.org/wiki/Chow%E2%80%93Liu_tree) with [probabilistic causation](https://plato.stanford.edu/entries/causation-probabilistic/).
 
+In particular, the presence of an edge $x \to y$
+
+
 We work with the top-ranking model.
 ```{r}
 x = x[[1]]
