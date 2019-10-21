@@ -62,7 +62,7 @@
 #' print(M)
 #' 
 #' # Manual construction
-#' y = mtrees(
+#' y = mtree(
 #' mtree_input$binary_clusters, 
 #' mtree_input$drivers,
 #' mtree_input$samples,
