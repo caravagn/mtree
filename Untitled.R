@@ -7,6 +7,7 @@ mtree_input$binary_clusters = mtree_input$CCF_clusters %>%
 mtree_input$drivers = mtree_input$drivers %>%
   mutate(cluster = paste(cluster), nMuts = 4) 
 
+usethis::use_data(mtree_input, overwrite = TRUE)
 
 x = mtree::mtrees(
   binary_clusters = mtree_input$binary_clusters,
@@ -27,3 +28,4 @@ x = mtree::mtree(
   score = 1
 )
 
+plot_CCF_clusters(x)

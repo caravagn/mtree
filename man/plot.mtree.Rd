@@ -2,7 +2,7 @@
 % Please edit documentation in R/S3_plot.R
 \name{plot.mtree}
 \alias{plot.mtree}
-\title{Plot a \code{ctree} tree.}
+\title{Plot a \code{mtree} tree.}
 \usage{
 \method{plot}{mtree}(x,
   node_palette = colorRampPalette(RColorBrewer::brewer.pal(n = 9,

@@ -1,4 +1,4 @@
-#' Plot a \code{ctree} tree.
+#' Plot a \code{mtree} tree.
 #' 
 #' @description 
 #' 
