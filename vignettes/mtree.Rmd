@@ -109,6 +109,12 @@ For the data, you can plot the binary clusters.
 plot_binary_clusters(x)
 ```
 
+Also, you can plot the reslt of evaluating Suppes' conditions on the data of this tree.
+```{r, fig.height=4, fig.width=8}
+plot_Suppes(x)
+```
+
+
 Or you can plot the size of each binary cluster as a barplot. This barplot is annotated to report wether a cluster of alterations with a driver is significantly larger than the expected size for the cases without driver. To carry out this test subclones without drivers are used to estimate the parameters of a univariate Gaussian distribution (mean and standard deviation), the p-value is then computed from the fit distribution through the `pnorm` function. The alpha level for the test can be passed as parameter.
 
 ```{r, fig.height=3.5, fig.width=5}

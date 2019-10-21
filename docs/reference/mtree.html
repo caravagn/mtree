@@ -43,7 +43,7 @@
 
 
 <meta property="og:title" content="Construct a `mtree` mutation tree with known structure. — mtree" />
-<meta property="og:description" content="This constructor creates an object of class `'ctree'`, which represents a mutation tree. 
+<meta property="og:description" content="This constructor creates an object of class `'mtree'`, which represents a mutation tree. 
 The tree is created from a set of binary clusters computed for a patient, here a cluster
 is defined as the set of alterations (e.g., mutations) that are detected as present or
 absent in the same set of sequenced biopsies.
@@ -124,7 +124,7 @@ refer to the package vignette and the provided input datasets for more instructi
     </div>
 
     <div class="ref-description">
-    <p>This constructor creates an object of class `'ctree'`, which represents a mutation tree. 
+    <p>This constructor creates an object of class `'mtree'`, which represents a mutation tree. 
 The tree is created from a set of binary clusters computed for a patient, here a cluster
 is defined as the set of alterations (e.g., mutations) that are detected as present or
 absent in the same set of sequenced biopsies.</p>
@@ -135,11 +135,18 @@ refer to the package vignette and the provided input datasets for more instructi
     </div>
 
     <pre class="usage"><span class='fu'>mtree</span>(<span class='no'>binary_clusters</span>, <span class='no'>drivers</span>, <span class='no'>samples</span>, <span class='no'>patient</span>, <span class='no'>M</span>, <span class='no'>score</span>,
-  <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"Mutation tree for patient "</span>, <span class='no'>patient</span>))</pre>
+  <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"Mutation tree for patient "</span>, <span class='no'>patient</span>),
+  <span class='kw'>evaluation</span> <span class='kw'>=</span> <span class='st'>"&gt;="</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>binary_clusters</th>
+      <td><p>Clusters of Cancer Cell Fractions available in the data of
+this patient. See the package vignette to see the format in which this should
+be specified.</p></td>
+    </tr>
     <tr>
       <th>drivers</th>
       <td><p>A list of driver events that should be annotated to each one
@@ -169,16 +176,14 @@ this patient).</p></td>
 This will be used by some of the plotting functions that display `ctree` objects.</p></td>
     </tr>
     <tr>
-      <th>CCF_clusters</th>
-      <td><p>Clusters of Cancer Cell Fractions available in the data of
-this patient. See the package vignette to see the format in which this should
-be specified.</p></td>
+      <th>evaluation</th>
+      <td><p>How Suppes conditions should be evaluated (`&gt;=` or `&gt;`).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>"ctree"</code> that represents this tree.</p>
+    <p>An object of class <code>"mtree"</code> that represents this tree.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>This function requires the input tree to be specified in the
@@ -186,33 +191,85 @@ format of an adjacency matrix; plese see function <code><a href='mtrees.html'>mt
 need to create de novo also the adjacency matrices that fit your data.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'ctree_input'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘ctree_input’ not found</span></div><div class='input'>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'>ctrees</span>(
-   <span class='no'>ctree_input</span>$<span class='no'>CCF_clusters</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>drivers</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>samples</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>patient</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>sspace.cutoff</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>n.sampling</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>store.max</span>
-   )</div><div class='output co'>#&gt; <span class='error'>Error in ctrees(ctree_input$CCF_clusters, ctree_input$drivers, ctree_input$samples,     ctree_input$patient, ctree_input$sspace.cutoff, ctree_input$n.sampling,     ctree_input$store.max): could not find function "ctrees"</span></div><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'x' not found</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>mtree_input</span>)
+
+<span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='mtrees.html'>mtrees</a></span>(
+<span class='no'>mtree_input</span>$<span class='no'>binary_clusters</span>,
+<span class='no'>mtree_input</span>$<span class='no'>drivers</span>,
+<span class='no'>mtree_input</span>$<span class='no'>samples</span>,
+<span class='no'>mtree_input</span>$<span class='no'>patient</span>,
+<span class='no'>mtree_input</span>$<span class='no'>sspace.cutoff</span>,
+<span class='no'>mtree_input</span>$<span class='no'>n.sampling</span>,
+<span class='no'>mtree_input</span>$<span class='no'>store.max</span>
+)</div><div class='output co'>#&gt; <span style='color: #BBBBBB;background-color: #0000BB;'> [ mtree ~ generate mutation trees for PD9193 ] 
+#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>Sampler : </span><span> 10000 (cutoff),  5000 (sampling),  100 (max store) </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; Suppes' conditions : </span><span> &gt;= </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; </span><span style='color: #555555;'># A tibble: 4 x 14</span><span>
+#&gt;   Misc  patientID cluster is.driver is.clonal PD9193d PD9193e PD9193f PD9193g
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cuto… PD9193    2       FALSE     FALSE           1       1       1       0
+#&gt; </span><span style='color: #555555;'>2</span><span> cuto… PD9193    3       TRUE      FALSE           1       0       0       0
+#&gt; </span><span style='color: #555555;'>3</span><span> cuto… PD9193    1       TRUE      TRUE            1       1       1       1
+#&gt; </span><span style='color: #555555;'>4</span><span> cuto… PD9193    4       TRUE      FALSE           1       0       1       1
+#&gt; </span><span style='color: #555555;'># … with 5 more variables: PD9193h </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193i </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193j </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   PD9193k </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, nMuts </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; 
+#&gt; </span><span style='color: #00BB00;background-color: #BBBB00;'>✔</span><span style='color: #000000;background-color: #BBBB00;'> Structures</span><span> 3 - search is exahustive </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; </span><span style='color: #00BB00;background-color: #BBBB00;'>✔</span><span style='color: #000000;background-color: #BBBB00;'> Trees with non-zero sscore</span><span> 3 storing 3 </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; </span><span></div><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
 
 <span class='co'># Adj matrix inside of the objects, we remove the GL</span>
 <span class='co'># entry that is added as fake root by ctree</span>
-<span class='no'>M</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>adj_mat</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'x' not found</span></div><div class='input'><span class='no'>M</span> <span class='kw'>=</span> <span class='no'>M</span>[<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>M</span>) <span class='kw'>!=</span> <span class='st'>'GL'</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>M</span>) <span class='kw'>!=</span> <span class='st'>'GL'</span>]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'M' not found</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>M</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(M): object 'M' not found</span></div><div class='input'>
+<span class='no'>M</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>adj_mat</span>
+<span class='no'>M</span> <span class='kw'>=</span> <span class='no'>M</span>[<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>M</span>) <span class='kw'>!=</span> <span class='st'>'GL'</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>M</span>) <span class='kw'>!=</span> <span class='st'>'GL'</span>]
+
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>M</span>)</div><div class='output co'>#&gt;   4 1 3 2
+#&gt; 4 0 0 1 0
+#&gt; 1 1 0 0 1
+#&gt; 3 0 0 0 0
+#&gt; 2 0 0 0 0</div><div class='input'>
 <span class='co'># Manual construction</span>
-<span class='no'>y</span> <span class='kw'>=</span> <span class='fu'>ctree</span>(
-   <span class='no'>ctree_input</span>$<span class='no'>CCF_clusters</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>drivers</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>samples</span>,
-   <span class='no'>ctree_input</span>$<span class='no'>patient</span>,
-   <span class='no'>M</span>,
-   <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>123456</span>,
-   <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"Some clone tree"</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in ctree(ctree_input$CCF_clusters, ctree_input$drivers, ctree_input$samples,     ctree_input$patient, M, score = 123456, annotation = paste0("Some clone tree")): could not find function "ctree"</span></div><div class='input'>
+<span class='no'>y</span> <span class='kw'>=</span> <span class='fu'><a href='mtrees.html'>mtrees</a></span>(
+<span class='no'>mtree_input</span>$<span class='no'>binary_clusters</span>,
+<span class='no'>mtree_input</span>$<span class='no'>drivers</span>,
+<span class='no'>mtree_input</span>$<span class='no'>samples</span>,
+<span class='no'>mtree_input</span>$<span class='no'>patient</span>,
+<span class='no'>M</span>,
+<span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>123456</span>,
+<span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"Some mutation tree"</span>)
+)</div><div class='output co'>#&gt; <span class='error'>Error in mtrees(mtree_input$binary_clusters, mtree_input$drivers, mtree_input$samples,     mtree_input$patient, M, score = 123456, annotation = paste0("Some mutation tree")): unused arguments (score = 123456, annotation = paste0("Some mutation tree"))</span></div><div class='input'>
 <span class='co'># The same</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(x): object 'x' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(y): object 'y' not found</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; </span><span style='color: #BBBBBB;background-color: #0000BB;'> [ mtree - mtree rank 1/3 for PD9193 ] 
+#&gt; </span><span>
+#&gt; </span><span style='color: #555555;'># A tibble: 4 x 14</span><span>
+#&gt;   Misc  patientID cluster is.driver is.clonal PD9193d PD9193e PD9193f PD9193g
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cuto… PD9193    2       FALSE     FALSE           1       1       1       0
+#&gt; </span><span style='color: #555555;'>2</span><span> cuto… PD9193    3       TRUE      FALSE           1       0       0       0
+#&gt; </span><span style='color: #555555;'>3</span><span> cuto… PD9193    1       TRUE      TRUE            1       1       1       1
+#&gt; </span><span style='color: #555555;'>4</span><span> cuto… PD9193    4       TRUE      FALSE           1       0       1       1
+#&gt; </span><span style='color: #555555;'># … with 5 more variables: PD9193h </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193i </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193j </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   PD9193k </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, nMuts </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; Tree shape (drivers annotated)</span><span>  </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; 
+#&gt; </span><span>  \-GL
+#&gt;    \-1 [PD9193k] :: GATA3
+#&gt;     |-4 :: +8q, -8p
+#&gt;     | \-3 :: SMARCA4
+#&gt;     \-2
+#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; Information transfer</span><span>  </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; 
+#&gt; </span><span>   +8q ---&gt; SMARCA4 
+#&gt;    -8p ---&gt; SMARCA4 
+#&gt;    GL ---&gt; GATA3 
+#&gt;    GATA3 ---&gt; +8q 
+#&gt;    GATA3 ---&gt; -8p 
+#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; Tree score</span><span> 0.000697748027942915 </span><span style='color: #000000;background-color: #BBBB00;'>
+#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(y): object 'y' not found</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -233,7 +290,7 @@ need to create de novo also the adjacency matrices that fit your data.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

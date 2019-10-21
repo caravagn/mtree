@@ -4,12 +4,11 @@
 \alias{plot.mtree}
 \title{Plot a \code{mtree} tree.}
 \usage{
-\method{plot}{mtree}(x,
-  node_palette = colorRampPalette(RColorBrewer::brewer.pal(n = 9,
-  "Set1")), tree_layout = "tree", ...)
+plot.mtree(x, node_palette = colorRampPalette(RColorBrewer::brewer.pal(n
+  = 9, "Set1")), tree_layout = "tree", ...)
 }
 \arguments{
-\item{x}{A \code{ctree} tree.}
+\item{x}{A \code{mtree} tree.}
 
 \item{node_palette}{A function that applied to a number will return a set of colors.
 By default this is a \code{colorRampPalette} applied to 9 colours of the \code{RColorBrewer}
@@ -25,23 +24,23 @@ layouts. By default this is a `tree` layout.}
 A \code{ggplot} plot of the tree.
 }
 \description{
-This S3 method plots a \code{ctree} tree, using \code{ggraph} layout
+This S3 method plots a \code{mtree} tree, using \code{ggraph} layout
 functions. The tree is annotated and coloured in each node (i.e.,
 cluster) that contain a driver event annotated. The driver id is also
 reported via \code{ggrepel} annotation functions.
 }
 \examples{
-data('ctree_input')
+data(mtree_input)
 
-x = ctrees(
-   ctree_input$CCF_clusters,
-   ctree_input$drivers,
-   ctree_input$samples,
-   ctree_input$patient,
-   ctree_input$sspace.cutoff,
-   ctree_input$n.sampling,
-   ctree_input$store.max
-   )
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
+)
    
 plot(x[[1]])
 }

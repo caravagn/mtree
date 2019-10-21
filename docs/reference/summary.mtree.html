@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print a <code>mtree</code> tree. — print.mtree • mtree</title>
+<title>Summary of a <code>"mtree"</code> object. — summary.mtree • mtree</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Print a <code>mtree</code> tree. — print.mtree" />
-<meta property="og:description" content="Print a mtree tree." />
+<meta property="og:title" content="Summary of a <code>"mtree"</code> object. — summary.mtree" />
+<meta property="og:description" content="Reports some summary statistics for a mutation tree." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -111,38 +111,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print a <code>mtree</code> tree.</h1>
+    <h1>Summary of a <code>"mtree"</code> object.</h1>
     
-    <div class="hidden name"><code>print.mtree.Rd</code></div>
+    <div class="hidden name"><code>summary.mtree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print a <code>mtree</code> tree.</p>
+    <p>Reports some summary statistics for a mutation tree.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mtree</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>mtree</code> tree.</p></td>
+      <td><p>An <code>mtree</code> tree.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra S3 parameters</p></td>
+      <td><p>Extra parameters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Nothing</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Print a summary for a <code>mtree</code> object, which includes a
-shell-frinedly layout and other information.</p>
+    <p>None.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>mtree_input</span>)
@@ -171,43 +167,27 @@ shell-frinedly layout and other information.</p>
 #&gt; </span><span style='color: #00BB00;background-color: #BBBB00;'>✔</span><span style='color: #000000;background-color: #BBBB00;'> Structures</span><span> 3 - search is exahustive </span><span style='color: #000000;background-color: #BBBB00;'>
 #&gt; </span><span style='color: #00BB00;background-color: #BBBB00;'>✔</span><span style='color: #000000;background-color: #BBBB00;'> Trees with non-zero sscore</span><span> 3 storing 3 </span><span style='color: #000000;background-color: #BBBB00;'>
 #&gt; </span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; </span><span style='color: #BBBBBB;background-color: #0000BB;'> [ mtree - mtree rank 1/3 for PD9193 ] 
-#&gt; </span><span>
-#&gt; </span><span style='color: #555555;'># A tibble: 4 x 14</span><span>
-#&gt;   Misc  patientID cluster is.driver is.clonal PD9193d PD9193e PD9193f PD9193g
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cuto… PD9193    2       FALSE     FALSE           1       1       1       0
-#&gt; </span><span style='color: #555555;'>2</span><span> cuto… PD9193    3       TRUE      FALSE           1       0       0       0
-#&gt; </span><span style='color: #555555;'>3</span><span> cuto… PD9193    1       TRUE      TRUE            1       1       1       1
-#&gt; </span><span style='color: #555555;'>4</span><span> cuto… PD9193    4       TRUE      FALSE           1       0       1       1
-#&gt; </span><span style='color: #555555;'># … with 5 more variables: PD9193h </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193i </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PD9193j </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   PD9193k </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, nMuts </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; Tree shape (drivers annotated)</span><span>  </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; 
-#&gt; </span><span>  \-GL
-#&gt;    \-1 [PD9193k] :: GATA3
-#&gt;     |-4 :: +8q, -8p
-#&gt;     | \-3 :: SMARCA4
-#&gt;     \-2
-#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; Information transfer</span><span>  </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; 
-#&gt; </span><span>   +8q ---&gt; SMARCA4 
-#&gt;    -8p ---&gt; SMARCA4 
-#&gt;    GL ---&gt; GATA3 
-#&gt;    GATA3 ---&gt; +8q 
-#&gt;    GATA3 ---&gt; -8p 
-#&gt; </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; Tree score</span><span> 0.000697748027942915 </span><span style='color: #000000;background-color: #BBBB00;'>
-#&gt; </span><span></div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt;             Length Class     Mode     
+#&gt; adj_mat     25     -none-    numeric  
+#&gt; tb_adj_mat  10     tbl_graph list     
+#&gt; score        1     -none-    numeric  
+#&gt; patient      1     -none-    character
+#&gt; samples      8     -none-    character
+#&gt; drivers     15     tbl_df    list     
+#&gt; CCF         14     tbl_df    list     
+#&gt; binary       1     -none-    logical  
+#&gt; transfer     2     -none-    list     
+#&gt; annotation   1     -none-    character
+#&gt; tree_type    1     -none-    character
+#&gt; evaluation   1     -none-    character
+#&gt; binary_data 14     tbl_df    list     
+#&gt; Suppes       3     -none-    list     </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

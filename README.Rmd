@@ -31,8 +31,6 @@ This type of models can be used to study the evolutionary trajectories of a tumo
 
 *  `mtree` is part of the `evoverse`, a [set of R packages](https://caravagn.github.io/evoverse) to implement Cancer Evolution analyses.
 
-
-
 #### Help and support
 
 `mtree` has its own webpage at [GitHub pages](https://caravagn.github.io/mtree/).

@@ -120,7 +120,7 @@ all.possible.trees = function(
 rankTrees = function(TREES, MI.table, structural.score)
 {
   pb = dplyr::progress_estimated(n = length(TREES), min_time = 2)
-  progress_bar = getOption('ctree.progressBar', default = TRUE)
+  progress_bar = getOption('mtree.progressBar', default = TRUE)
 
   MI.TREES = NULL
   for(i in 1:length(TREES))

@@ -2,14 +2,18 @@
 % Please edit documentation in R/mtrees.R
 \name{mtrees}
 \alias{mtrees}
-\title{Construct a `ctree` clone tree computing its structure.}
+\title{Construct a `mtree` mutation tree computing its structure.}
 \usage{
 mtrees(binary_clusters, drivers, samples, patient, sspace.cutoff = 10000,
-  n.sampling = 5000, store.max = 100)
+  n.sampling = 5000, store.max = 100, evaluation = ">=")
 }
 \arguments{
+\item{binary_clusters}{Clusters of binary annotations in the data of
+this patient. See the package vignette to see the format in which this should
+be specified.}
+
 \item{drivers}{A list of driver events that should be annotated to each one
-of the input clusters contained in the `CCF_clusters` parameter. See the package 
+of the input clusters contained in the `CCF_clusters` parameter. See the package
 vignette to see the format in which this should be specified.}
 
 \item{samples}{A vector of samples names (e.g., the biopsies sequenced for
@@ -25,12 +29,10 @@ this, a Monte Carlo sampler is used.}
 trees are sampled and scored.}
 
 \item{store.max}{When a number of trees are generated, scored and ranked, a maximum
-of \code{store.max} are returned to the user (these are selected following the 
+of \code{store.max} are returned to the user (these are selected following the
 ranking).}
 
-\item{CCF_clusters}{Clusters of Cancer Cell Fractions available in the data of
-this patient. See the package vignette to see the format in which this should
-be specified.}
+\item{evaluation}{How Suppes conditions should be evaluated (`>=` or `>`).}
 
 \item{M}{The adjacency matrix defined to connect all the nodes of this tree.}
 
@@ -40,34 +42,34 @@ be specified.}
 This will be used by some of the plotting functions that display `ctree` objects.}
 }
 \value{
-An list of objects of class \code{"ctree"} that represent the trees that 
-can be fit to the data of this patient..
+An list of objects of class \code{"mtree"} that represent the trees that
+can be fit to the data of this patient.
 }
 \description{
-This constructor creates a list of objects of class `'ctree'`, after using a
+This constructor creates a list of objects of class `'mtree'`, after using a
 sampling strategy to determine possible trees that fit the data. The strategy
 to sample trees can be controlled, a maximum number of trees can be sampled
 with a Monte Carlo procedure and the actual process can be exhausted if there
 are less than a number of available trees to fit the data.
 
-Note that the parameters of this function includes the same parmeters of 
-function \code{\link{ctree}}, plus the parameters of the sampler. See 
- \code{\link{ctree}} for an explanation of the parameters.
+Note that the parameters of this function includes the same parmeters of
+function \code{\link{mtree}}, plus the parameters of the sampler. See
+ \code{\link{mtree}} for an explanation of the parameters.
 }
 \examples{
 
-data('ctree_input')
+data(mtree_input)
 
-x = ctrees(
-   ctree_input$CCF_clusters,
-   ctree_input$drivers,
-   ctree_input$samples,
-   ctree_input$patient,
-   ctree_input$sspace.cutoff,
-   ctree_input$n.sampling,
-   ctree_input$store.max
-   )
-   
+x = mtrees(
+mtree_input$binary_clusters,
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
+)
+
 print(x[[1]])
 plot(x[[1]])
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_binary_clusters.R
 \name{plot_binary_clusters}
 \alias{plot_binary_clusters}
-\title{Plot CCF clusters data (tile).}
+\title{Plot binary clusters data (tile).}
 \usage{
 plot_binary_clusters(x, ...)
 }

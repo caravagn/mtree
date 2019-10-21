@@ -7,7 +7,7 @@
 plot_clone_size(x, alpha_level = 0.05)
 }
 \arguments{
-\item{x}{A \code{ctree} tree.}
+\item{x}{An \code{mtree} tree.}
 
 \item{alpha_level}{Alpha level for the test, default is 0.05.}
 
@@ -32,17 +32,17 @@ distribution through the `pnorm` function.
 The confidence level for the test can be passed as parameter.
 }
 \examples{
-data('ctree_input')
+data(mtree_input)
 
-x = ctrees(
-   ctree_input$CCF_clusters,
-   ctree_input$drivers,
-   ctree_input$samples,
-   ctree_input$patient,
-   ctree_input$sspace.cutoff,
-   ctree_input$n.sampling,
-   ctree_input$store.max
-   )
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
+)
    
 plot_clone_size(x[[1]])
 }

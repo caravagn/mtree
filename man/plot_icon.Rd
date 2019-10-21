@@ -8,7 +8,7 @@ plot_icon(x, node_palette = colorRampPalette(RColorBrewer::brewer.pal(n =
   9, "Set1")), ...)
 }
 \arguments{
-\item{x}{A \code{ctree} tree.}
+\item{x}{An \code{mtree} tree.}
 
 \item{node_palette}{A function that can return, for an input number,
 a number of colours.}
@@ -27,16 +27,16 @@ sort of the node of the corresponding clone tree, and in tiny
 icon format. Some graohics changes with respect ot a standard plot.
 }
 \examples{
-data(ctree_input)
+data(mtree_input)
 
-x = ctrees(
-ctree_input$CCF_clusters, 
-ctree_input$drivers,
-ctree_input$samples,
-ctree_input$patient,
-ctree_input$sspace.cutoff,
-ctree_input$n.sampling,
-ctree_input$store.max
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
 )
 
 plot_icon(x[[1]])

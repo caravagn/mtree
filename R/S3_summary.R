@@ -2,37 +2,35 @@
 
 
 
-#' Summary of a \code{"ctree"} object.
+#' Summary of a \code{"mtree"} object.
 #' @description 
 #' 
-#' Reports some summary statistics for a \code{"rev_phylo"} object, 
-#' which is a bit more than just using \code{print.}
+#' Reports some summary statistics for a mutation tree.
 #'
-#' @param x A \code{ctree} tree.
+#' @param x An \code{mtree} tree.
 #' @param ... Extra parameters
 #'
 #' @return None.
-#' @export summary.ctree
 #' @import crayon
 #'
 #' @examples
-#' data(ctree_input)
+#' data(mtree_input)
 #' 
-#' x = ctrees(
-#' ctree_input$CCF_clusters, 
-#' ctree_input$drivers,
-#' ctree_input$samples,
-#' ctree_input$patient,
-#' ctree_input$sspace.cutoff,
-#' ctree_input$n.sampling,
-#' ctree_input$store.max
+#' x = mtrees(
+#' mtree_input$binary_clusters, 
+#' mtree_input$drivers,
+#' mtree_input$samples,
+#' mtree_input$patient,
+#' mtree_input$sspace.cutoff,
+#' mtree_input$n.sampling,
+#' mtree_input$store.max
 #' )
 #' 
 #' summary(x[[1]])
-summary.ctree <- function(x, ...) {
+summary.mtree <- function(x, ...) {
   print.ctree(x, ...)
   
-  pio::pioStr("CCF clusters:",
+  pio::pioStr("Binary clusters:",
               "",
               prefix = '\n',
               suffix = '\n\n')
@@ -129,150 +127,3 @@ stats.rev_phylo = function(x)
   )
   
 }
-
-
-
-#'
-#' #' S3 method calling \code{\link{revolver_plt_tree}}.
-#' #'
-#' #' @param x An object of class \code{"rev_phylo"}.
-#' #' @param file Output file, or \code{NA}.
-#' #' @param palette RColorBrewer palette to colour clusters.
-#' #' @param cex Cex for the graph.
-#' #' @param alpha Transparency.
-#' #' @param verbose Output.
-#' #' @param ... Extra parameters
-#' #'
-#' #' @return Nothing
-#' #' @export plot.rev_phylo
-#' #' @import crayon
-#' #'
-#' #' @examples
-#' #' data(CRC.cohort)
-#' #' plot(CRC.cohort$phylogenies[['adenoma_3']][[1]])
-#' plot.rev_phylo = function(x,
-#'                           file = NA,
-#'                           palette = 'Set1',
-#'                           cex = 1,
-#'                           alpha = 0.7)
-#' {
-#'   revolver_plt_tree(
-#'     x,
-#'     file = file,
-#'     # edge.width = edge.width,
-#'     # edge.label = edge.label,
-#'     palette = palette,
-#'     cex = cex,
-#'     alpha = alpha
-#'   )
-#'   invisible(NULL)
-#' }
-
-# # a-la-dictionary
-# driver = function(x, c) {
-#   x$dataset[which(x$dataset$cluster == c &
-#                     x$dataset$is.driver), 'variantID']
-# }
-# driver.indexOf = function(x, d) {
-#   x$dataset[which(x$dataset$variantID == d &
-#                     x$dataset$is.driver), 'cluster']
-# }
-
-# # Compute the frontier of "var" in a model. The frontier is the set of
-# # mutations in Gamma that are directly reachable via
-# # the transitive closure of the --> relation. So, these are the events
-# # selected by "var"'s evolutionary trajectories.
-# information.transfer = function(x,
-#                                 transitive.closure = FALSE,
-#                                 indistinguishable = FALSE)
-# {
-#   aux = function(r)
-#   {
-#     r.d = driver(x, r)
-#
-#     if (length(r.d) > 0)
-#       return(r) # stop recursion
-#
-#     c = children(model, r)
-#
-#     if (is.null(c))
-#       return(NULL) # leaf
-#
-#     # recursion, reduction etc.
-#     return(Reduce(union,
-#                   sapply(c, aux)))
-#   }
-#
-#   model = x$adj_mat
-#   nodes.drivers = x$dataset %>%
-#     filter(is.driver) %>%
-#     pull(cluster)
-#
-#   # Root
-#   df = expand.grid(
-#     from = x$root,
-#     to = aux(x$root),
-#     stringsAsFactors = FALSE
-#   )
-#
-#   # and all other stuff
-#   for (n in nodes.drivers)
-#   {
-#     df.n = NULL
-#
-#     for (c in children(model, n))
-#       df.n = rbind(df.n,
-#                    expand.grid(
-#                      from = n,
-#                      to = aux(c),
-#                      stringsAsFactors = FALSE
-#                    ))
-#
-#     df = rbind(df, df.n)
-#   }
-#
-#   # Then, for all clones, we expand the drivers that they have
-#   expanded = apply(df,
-#                    1,
-#                    function(w) {
-#                      e.from = driver(x, w['from'])
-#                      if (length(e.from) == 0)
-#                        e.from = w['from']
-#
-#                      e.to = driver(x, w['to'])
-#
-#                      expand.grid(from = e.from,
-#                                  to = e.to,
-#                                  stringsAsFactors = FALSE)
-#                    })
-#   expanded = Reduce(rbind, expanded)
-#
-#   # Then we see if we want to expand also the indistinguishible
-#   if (indistinguishable) {
-#     for (n in nodes.drivers) {
-#       expanded = rbind(expanded,
-#                        expand.grid(
-#                          from = driver(x, n),
-#                          to = driver(x, n),
-#                          stringsAsFactors = FALSE
-#                        ))
-#     }
-#   }
-#
-#   # If we need transitive closures, we compute them here
-#   if (transitive.closure)
-#   {
-#     df = DataFrameToMatrix(df)
-#     df = nem::transitive.closure(df, mat = T, loops = FALSE)
-#
-#     expanded = DataFrameToMatrix(expanded)
-#     expanded = nem::transitive.closure(expanded, mat = T, loops = FALSE)
-#
-#     df = MatrixToDataFrame(df)
-#     expanded = MatrixToDataFrame(expanded)
-#   }
-#
-#   return(list(clones = df, drivers = expanded))
-# }
-
-

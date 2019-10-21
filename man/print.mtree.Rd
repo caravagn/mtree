@@ -2,12 +2,12 @@
 % Please edit documentation in R/S3_print.R
 \name{print.mtree}
 \alias{print.mtree}
-\title{Print a \code{ctree} tree.}
+\title{Print a \code{mtree} tree.}
 \usage{
 \method{print}{mtree}(x, ...)
 }
 \arguments{
-\item{x}{A \code{ctree} tree.}
+\item{x}{A \code{mtree} tree.}
 
 \item{...}{Extra S3 parameters}
 }
@@ -15,23 +15,23 @@
 Nothing
 }
 \description{
-Print a \code{ctree} tree.
+Print a \code{mtree} tree.
 }
 \details{
-Print a summary for a \code{ctree} object, which includes a
+Print a summary for a \code{mtree} object, which includes a
 shell-frinedly layout and other information.
 }
 \examples{
-data(ctree_input)
+data(mtree_input)
 
-x = ctrees(
-ctree_input$CCF_clusters, 
-ctree_input$drivers,
-ctree_input$samples,
-ctree_input$patient,
-ctree_input$sspace.cutoff,
-ctree_input$n.sampling,
-ctree_input$store.max
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
 )
 
 print(x[[1]])

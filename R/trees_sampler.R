@@ -4,7 +4,8 @@ trees_sampler = function(binary_clusters,
                          patient,
                          sspace.cutoff = 10000,
                          n.sampling = 5000,
-                         store.max = 100)
+                         store.max = 100,
+                         evaluation = '>=')
 {
   TREES = SCORES = NULL
   
@@ -34,7 +35,7 @@ trees_sampler = function(binary_clusters,
   {
     
     # ################## Generate Suppes poset
-    SUPPES = Suppes_poset(binary_clusters, samples)
+    SUPPES = Suppes_poset(binary_clusters, samples, evaluation = evaluation)
     
     CONSENSUS.TREE = SUPPES$Suppes %>% 
       filter(Suppes) %>%

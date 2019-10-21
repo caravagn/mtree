@@ -1,4 +1,4 @@
-#' Plot CCF clusters data (tile).
+#' Plot binary clusters data (tile).
 #' 
 #' @description This function creates a \code{ggplot}-style
 #' heatmap of the input CCF cluster of each clone in the data.

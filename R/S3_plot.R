@@ -2,12 +2,12 @@
 #' 
 #' @description 
 #' 
-#' This S3 method plots a \code{ctree} tree, using \code{ggraph} layout
+#' This S3 method plots a \code{mtree} tree, using \code{ggraph} layout
 #' functions. The tree is annotated and coloured in each node (i.e.,
 #' cluster) that contain a driver event annotated. The driver id is also
 #' reported via \code{ggrepel} annotation functions.
 #'
-#' @param x A \code{ctree} tree.
+#' @param x A \code{mtree} tree.
 #' @param node_palette A function that applied to a number will return a set of colors.
 #' By default this is a \code{colorRampPalette} applied to 9 colours of the \code{RColorBrewer}
 #' palette \code{Set1}. Colors are generated following a topological sort of the information
@@ -18,8 +18,6 @@
 #'
 #' @return A \code{ggplot} plot of the tree.
 #'
-#' @export plot.mtree
-#'
 #' @import crayon
 #' @import igraph
 #' @import tidygraph
@@ -27,18 +25,20 @@
 #' @import ggrepel
 #' @import RColorBrewer
 #'
+#' @export
+#'
 #' @examples
-#' data('ctree_input')
+#' data(mtree_input)
 #' 
-#' x = ctrees(
-#'    ctree_input$CCF_clusters,
-#'    ctree_input$drivers,
-#'    ctree_input$samples,
-#'    ctree_input$patient,
-#'    ctree_input$sspace.cutoff,
-#'    ctree_input$n.sampling,
-#'    ctree_input$store.max
-#'    )
+#' x = mtrees(
+#' mtree_input$binary_clusters, 
+#' mtree_input$drivers,
+#' mtree_input$samples,
+#' mtree_input$patient,
+#' mtree_input$sspace.cutoff,
+#' mtree_input$n.sampling,
+#' mtree_input$store.max
+#' )
 #'    
 #' plot(x[[1]])
 plot.mtree = function(x,

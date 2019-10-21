@@ -5,9 +5,14 @@
 \title{Construct a `mtree` mutation tree with known structure.}
 \usage{
 mtree(binary_clusters, drivers, samples, patient, M, score,
-  annotation = paste0("Mutation tree for patient ", patient))
+  annotation = paste0("Mutation tree for patient ", patient),
+  evaluation = ">=")
 }
 \arguments{
+\item{binary_clusters}{Clusters of Cancer Cell Fractions available in the data of
+this patient. See the package vignette to see the format in which this should
+be specified.}
+
 \item{drivers}{A list of driver events that should be annotated to each one
 of the input clusters contained in the `CCF_clusters` parameter. See the package 
 vignette to see the format in which this should be specified.}
@@ -24,15 +29,13 @@ this patient).}
 \item{annotation}{Any string annotation that one wants to add to this `ctree`.
 This will be used by some of the plotting functions that display `ctree` objects.}
 
-\item{CCF_clusters}{Clusters of Cancer Cell Fractions available in the data of
-this patient. See the package vignette to see the format in which this should
-be specified.}
+\item{evaluation}{How Suppes conditions should be evaluated (`>=` or `>`).}
 }
 \value{
-An object of class \code{"ctree"} that represents this tree.
+An object of class \code{"mtree"} that represents this tree.
 }
 \description{
-This constructor creates an object of class `'ctree'`, which represents a mutation tree. 
+This constructor creates an object of class `'mtree'`, which represents a mutation tree. 
 The tree is created from a set of binary clusters computed for a patient, here a cluster
 is defined as the set of alterations (e.g., mutations) that are detected as present or
 absent in the same set of sequenced biopsies.
@@ -43,17 +46,17 @@ fields that are required for tree construction to operate successfully. Please
 refer to the package vignette and the provided input datasets for more instructions.
 }
 \examples{
-data('ctree_input')
+data(mtree_input)
 
-x = ctrees(
-   ctree_input$CCF_clusters,
-   ctree_input$drivers,
-   ctree_input$samples,
-   ctree_input$patient,
-   ctree_input$sspace.cutoff,
-   ctree_input$n.sampling,
-   ctree_input$store.max
-   )
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
+)
 x = x[[1]]    
    
    
@@ -65,14 +68,14 @@ M = M[rownames(M) != 'GL', colnames(M) != 'GL']
 print(M)
 
 # Manual construction
-y = ctree(
-   ctree_input$CCF_clusters,
-   ctree_input$drivers,
-   ctree_input$samples,
-   ctree_input$patient,
-   M,
-   score = 123456,
-   annotation = paste0("Some clone tree")
+y = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+M,
+score = 123456,
+annotation = paste0("Some mutation tree")
 )
 
 # The same
