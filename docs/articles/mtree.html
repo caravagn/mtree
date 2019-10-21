@@ -162,6 +162,14 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt; </span><span>
 </span></code></pre>
 <p>The sampler creates a number of mutation trees that can fit the data according to a model that integrates <a href="https://en.wikipedia.org/wiki/Chow%E2%80%93Liu_tree">Chow-Liu trees</a> with <a href="https://plato.stanford.edu/entries/causation-probabilistic/">probabilistic causation</a>.</p>
+<p>In particular, if we denote with <span class="math inline">\(p(\cdot)\)</span> the empirical probability of a variable from the data, then the presence of an edge <span class="math inline">\(x \to y\)</span> requires these conditions to be satisfied.</p>
+<ul>
+<li>
+<span class="math inline">\(p(x) \geq p(y)\)</span>;</li>
+<li>
+<span class="math inline">\(p(x,y) \geq p(x)p(y)\)</span> which implies <span class="math inline">\(p(y|x) \geq p(y|\neg x)\)</span>;</li>
+</ul>
+<p>These are relaxations of Suppes’ original strict conditions (i.e., <span class="math inline">\(p(x) &gt; p(y)\)</span>) for probabilistic causation, and are termed temporal priority and probability raising; <a href="https://www.pnas.org/content/113/28/E4025">PMID 27357673</a>. These conditions are used to create a partially ordered set, from which possible trees are generated. In the Chow-Liu style, the trees are scored according to the mutual information among the connected variables, which is the quantity that one seeks to maximise.</p>
 <p>We work with the top-ranking model.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">x =<span class="st"> </span>x[[<span class="dv">1</span>]]</a></code></pre></div>
 </div>

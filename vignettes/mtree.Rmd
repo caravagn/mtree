@@ -75,8 +75,12 @@ x = mtrees(
 
 The sampler creates a number of mutation trees that can fit the data according to a model that integrates [Chow-Liu trees](https://en.wikipedia.org/wiki/Chow%E2%80%93Liu_tree) with [probabilistic causation](https://plato.stanford.edu/entries/causation-probabilistic/).
 
-In particular, the presence of an edge $x \to y$
+In particular, if we denote with $p(\cdot)$ the empirical probability of a variable from the data, then the presence of an edge $x \to y$ requires these conditions to be satisfied.
 
+- $p(x) \geq p(y)$;
+- $p(x,y) \geq p(x)p(y)$ which implies $p(y|x) \geq p(y|\neg x)$;
+
+These are relaxations of Suppes' original strict conditions (i.e., $p(x) > p(y)$)  for probabilistic causation, and are termed temporal priority and probability raising; [PMID 27357673](https://www.pnas.org/content/113/28/E4025). These conditions are used to create a partially ordered set, from which possible trees are generated. In the Chow-Liu style, the trees are scored according to the mutual information among the connected variables, which is the quantity that one seeks to maximise.
 
 We work with the top-ranking model.
 ```{r}
