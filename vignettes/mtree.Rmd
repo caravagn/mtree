@@ -1,0 +1,109 @@
+---
+title: "mtree"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mtree}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(crayon.enabled=TRUE)
+```
+
+```{r, comment="", results="asis"}
+# To render in colour this vignette
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+```
+
+The `mtree` is a package to implement basic functions to create, manipulate and visualize mutation trees. A mutation tree is a tree built from  binary sequencing data that reports the presence or absence of a set of somatic variants (mutations, copy number etc.) in multiple tumour biopsies.
+
+The trees created with `mtree` are used inside [REVOLVER](https://github.com/caravagn/revolver), a package that implements one algorithm to determine [repeated cancer evolution from multi-region sequencing data of human cancers](https://www.nature.com/articles/s41592-018-0108-x). 
+
+
+```{r setup, message=F, warning=F}
+library(mtree)
+```
+
+To build a mutation tree you need some basic datal; an example dataset is attached to the package and can be used to create a `ctree` S3 object.
+```{r}
+data('mtree_input')
+```
+### Required data
+
+**Binary data**
+
+Binary data that reports the presence (`1`) or absence (`0`) of any somatic event that you want annotate in your data. To run `mtree` you need to report both which of the annotated events are drivers, but also which sets of events are always found in the same samples and, therefore, have same patterns of 0s and 1s.
+
+An example dataset is the following
+```{r}
+mtree_input$binary_clusters
+```
+Where cluster `1` represents  all the annotated events that are detected across all sequenced biopsies. Notice that this is similar, but not exactly the same, to clusters obtained from [subclonal deconvolution of Cancer Cell Fractions](https://caravagn.github.io/ctree).
+
+The set of drivers annotated in this sequencing data is reported clonality status, `variantID` and a `patientID.`
+```{r}
+mtree_input$drivers
+```
+
+**Other data**
+
+```{r}
+mtree_input$samples
+mtree_input$patient
+```
+
+### Creation of a mutation tree
+
+You can use a sampler and control its parameters -- see `mtrees`.
+```{r}
+x = mtrees(
+  mtree_input$binary_clusters, 
+  mtree_input$drivers,
+  mtree_input$samples,
+  mtree_input$patient,
+  mtree_input$sspace.cutoff,
+  mtree_input$n.sampling,
+  mtree_input$store.max
+)
+```
+
+The sampler creates a number of mutation trees that can fit the data according to a model that integrates [Chow-Liu trees](https://en.wikipedia.org/wiki/Chow%E2%80%93Liu_tree) with [probabilistic causation](https://plato.stanford.edu/entries/causation-probabilistic/).
+
+We work with the top-ranking model.
+```{r}
+x = x[[1]]
+```
+
+### Visualisations
+
+S3 functions for printing, and summarizing the object.
+```{r}
+print(x)
+summary(x)
+```
+
+Then some plotting functions for the tree. A tree layout is used to display the mutation tree and the information transfer, which corresponds to the ordering of the drivers annnotated in the tree. This terminology is borrowed from the [REVOLVER](https://github.com/caravagn/revolver) algorithm, where it is used to refer to the set of trajectories that a patient "transfers" to another patient during the fit.
+```{r, fig.height=4, fig.width=5}
+plot(x)
+plot_information_transfer(x)
+```
+```{r, fig.height=2, fig.width=2}
+plot_icon(x)
+```
+
+For the data, you can plot the binary clusters.
+```{r, fig.height=3.5, fig.width=5}
+plot_binary_clusters(x)
+```
+
+Or you can plot the size of each binary cluster as a barplot. This barplot is annotated to report wether a cluster of alterations with a driver is significantly larger than the expected size for the cases without driver. To carry out this test subclones without drivers are used to estimate the parameters of a univariate Gaussian distribution (mean and standard deviation), the p-value is then computed from the fit distribution through the `pnorm` function. The alpha level for the test can be passed as parameter.
+
+```{r, fig.height=3.5, fig.width=5}
+plot_clone_size(x)
+```

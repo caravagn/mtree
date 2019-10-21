@@ -7,7 +7,7 @@
 plot_binary_clusters(x, ...)
 }
 \arguments{
-\item{x}{A \code{ctree} tree.}
+\item{x}{An \code{mtree} tree.}
 
 \item{...}{Extra parameters, not used.}
 
@@ -24,16 +24,16 @@ clone (with/ without driver). The CCF values are used to
 colour the heatmap (`NA` values are in light gray).
 }
 \examples{
-data(ctree_input)
+data(mtree_input)
 
-x = ctrees(
-ctree_input$CCF_clusters, 
-ctree_input$drivers,
-ctree_input$samples,
-ctree_input$patient,
-ctree_input$sspace.cutoff,
-ctree_input$n.sampling,
-ctree_input$store.max
+x = mtrees(
+mtree_input$binary_clusters, 
+mtree_input$drivers,
+mtree_input$samples,
+mtree_input$patient,
+mtree_input$sspace.cutoff,
+mtree_input$n.sampling,
+mtree_input$store.max
 )
 
 plot_binary_clusters(x[[1]])

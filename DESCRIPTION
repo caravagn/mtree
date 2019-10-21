@@ -5,13 +5,14 @@ Title: mtree - Mutation Tree
 Type: Package
 Author: Giulio Caravagna
 Maintainer: Giulio Caravagna <gcaravagn@gmail.com>
-Description: This package provides an implementation for mutation trees
-  that can be build of multi-region binary somatic data (mutations, CNAs, ...). 
-  This type of models can be used to study
-  the evolutionary trajectories of a tumour from bulk sequencing data.
-  This package provides several functions to generate mutation trees from 
-  binary datas, to plot and summarise trees, and is part of the `evoverse`, 
-  a package that gathers multiple R
+Description: This package implements mutation trees
+  that can be built from multi-region binary data of cancer somatic mutations, 
+  copy number alterations, etc. This type of models can be used to study
+  the evolutionary trajectories of a tumour from targeted bulk sequencing data,
+  or from any multi-sample data that cannot be used for the computation of
+  higher-resolution models like clone trees.
+  This package provides several functions to generate,  plot and summarise 
+  mutation trees, and is part of the `evoverse`,a package that gathers multiple R
   packages to implement Cancer Evolution analyses.
 License: GPL-3
 Encoding: UTF-8

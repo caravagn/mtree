@@ -11,21 +11,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mtree <img src='man/figures/logo.png' align="right" height="139" />
+# mtree <a href='https://caravagn.github.io/mtree/'> <img src='man/figures/logo.png' align="right" height="139" /> </a>
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/caravagn/mtree.svg?branch=master)](https://travis-ci.org/caravagn/mtree)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
-Thee `mtree` package provides a simple implementation of mutation trees that can be build of binary data reporting the presence or absence of specific mutations in multiple tumour regions. This type of models can be used to study the evolutionary trajectories of a tumour from bulk sequencing data generated via targeted sequencing.
+Thee `mtree` package provides a simple implementation of *mutation trees* in cancer.
 
-`mtree` is part of the `evoverse`, a package that gathers multiple R packages to implement 
-Cancer Evolution analyses; see more [about evoverse](https://caravagn.github.io/evoverse).
+Mutation trees can be built from binary data reporting the presence or absence of specific mutations - or any other somatic covariates -  across a number of tumour regions. In this `mtree`, we integrate [Chow-Liu trees](https://en.wikipedia.org/wiki/Chow%E2%80%93Liu_tree) with [probabilistic causation](https://plato.stanford.edu/entries/causation-probabilistic/).
 
-The package provides methods to create the trees as S3 objects, as well as a sampler to generate them 
-with a Monte Carlo strategy that have been first described in the [revolver](https://caravagn.github.io/revolver)
-algorithm. The package provides also functions to plot and analyze the trees.
+This type of models can be used to study the evolutionary trajectories of a tumour from bulk sequencing data, especially in setups where only targeted sequencing panels are available and methods for subclonal deconvolution cannot be used.
+
+
+* `mtree` provides an S3-based implementation of mutation trees, as well as a Monte Carlo sampler that has been discussed in [Caravagna et al; PMID: 30171232](https://www.ncbi.nlm.nih.gov/pubmed/30171232). The package provides also functions to plot and analyze the trees.
+
+* The sibling of a mutation tree is a *clone tree*,  which is obtained from subclonal deconvolution of bulk samples when whole-genome/ exome sequencing is available; clone trees are implemented in the [ctree package](https://caravagn.github.io/ctree).
+
+*  `mtree` is part of the `evoverse`, a [set of R packages](https://caravagn.github.io/evoverse) to implement Cancer Evolution analyses.
+
+
 
 #### Help and support
 
