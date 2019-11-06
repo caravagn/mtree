@@ -7,6 +7,7 @@
 status](https://travis-ci.org/caravagn/mtree.svg?branch=master)](https://travis-ci.org/caravagn/mtree)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![](https://img.shields.io/badge/Part%20of-evoverse-blue.svg)](https://caravagn.github.io/evoverse)
 <!-- badges: end -->
 
 Thee `mtree` package provides a simple implementation of *mutation
@@ -35,14 +36,14 @@ deconvolution cannot be used.
     exome sequencing is available; clone trees are implemented in the
     [ctree package](https://caravagn.github.io/ctree).
 
-  - `mtree` is part of the `evoverse`, a [set of R
-    packages](https://caravagn.github.io/evoverse) to implement Cancer
-    Evolution analyses.
+`mtree` is part of the `evoverse`, a [set of R
+packages](https://caravagn.github.io/evoverse) to implement Cancer
+Evolution
+analyses.
 
 #### Help and support
 
-`mtree` has its own webpage at [GitHub
-pages](https://caravagn.github.io/mtree/).
+[![](https://img.shields.io/badge/GitHub%20Pages-https://caravagn.github.io/mtree/-yellow.svg)](https://caravagn.github.io/mtree)
 
 -----
 
