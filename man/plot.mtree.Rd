@@ -4,9 +4,8 @@
 \alias{plot.mtree}
 \title{Plot a \code{mtree} tree.}
 \usage{
-\method{plot}{mtree}(x,
-  node_palette = colorRampPalette(RColorBrewer::brewer.pal(n = 9,
-  "Set1")), tree_layout = "tree", ...)
+plot.mtree(x, node_palette = colorRampPalette(RColorBrewer::brewer.pal(n
+  = 9, "Set1")), tree_layout = "tree", ...)
 }
 \arguments{
 \item{x}{A \code{mtree} tree.}
