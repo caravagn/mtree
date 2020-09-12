@@ -148,7 +148,7 @@ mtree =
     }
     
     # Input can should be an adjacency matrix (which works also for monoclonal tumours)
-    if (class(M) != 'matrix')
+    if (!inherits(M, 'matrix'))
       stop("Input `M` should be an adjacency matrix, aborting.")
     
     adj_mat =  M
